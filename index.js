@@ -153,4 +153,47 @@ class DiscordXp {
 
     return user;
   }
+
+  /**
+  * @param {string} [userId] - Discord user id.
+  * @param {string} [guildId] - Discord guild id.
+  * @param {number} [xp] - Amount of xp to subtract.
+  */
+
+  async static subtractXp(userId, guildId, xp) {
+    if (!userId) throw new TypeError("An user id was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!xp) throw new TypeError("An amount of xp was not provided.");
+
+    const user = await levels.findOne({ userID: userId, guildID: guildId });
+    if (!user) return false;
+
+    user.xp -= xp;
+
+    user.save().catch(e => console.log(`Failed to subtract xp: ${e}`) );
+
+    return user;
+  }
+
+  /**
+  * @param {string} [userId] - Discord user id.
+  * @param {string} [guildId] - Discord guild id.
+  * @param {number} [levels] - Amount of levels to subtract.
+  */
+
+  async static subtractLevel(userId, guildId, levels) {
+    if (!userId) throw new TypeError("An user id was not provided.");
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!levels) throw new TypeError("An amount of levels was not provided.");
+
+    const user = await levels.findOne({ userID: userId, guildID: guildId });
+    if (!user) return false;
+
+    user.level -= levels;
+
+    user.save().catch(e => console.log(`Failed to subtract levels: ${e}`) );
+
+    return user;
+  }
+
 }
