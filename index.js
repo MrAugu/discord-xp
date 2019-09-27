@@ -86,14 +86,12 @@ class DiscordXp {
       }
     };
 
-    const lvl = user.level;
-
     user.xp += xp;
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
-    user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
+    await user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
 
-    if (lvl < user.level) {
+    if (Math.floor(0.1 * Math.sqrt(user.xp -= xp)) < user.level) {
       return true;
     } else {
       return false;
@@ -235,7 +233,7 @@ class DiscordXp {
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!limit) throw new TypeError("A limit was not provided.");
 
-    const users = await levels.find({ guildID: guildId });
+    var users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).exec();
 
     return users.slice(0, limit);
   }
