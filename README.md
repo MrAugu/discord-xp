@@ -1,9 +1,14 @@
 <p align="center"><a href="https://nodei.co/npm/discord-xp/"><img src="https://nodei.co/npm/discord-xp.png"></a></p>
-<p align="center"><img src="https://img.shields.io/npm/v/discord-xp"> <img src="https://img.shields.io/github/repo-size/MrAugu/discord-xp"> <img src="https://img.shields.io/npm/l/discord-xp"> <img src="https://img.shields.io/github/contributors/MrAugu/discord-xp"> <img src="https://img.shields.io/github/package-json/dependency-version/MrAugu/discord-xp/mongoose"></p>
+<p align="center"><img src="https://img.shields.io/npm/v/discord-xp"> <img src="https://img.shields.io/github/repo-size/MrAugu/discord-xp"> <img src="https://img.shields.io/npm/l/discord-xp"> <img src="https://img.shields.io/github/contributors/MrAugu/discord-xp"> <img src="https://img.shields.io/github/package-json/dependency-version/MrAugu/discord-xp/mongoose"> <a href="https://discord.gg/6xR9ruy"><img src="https://discordapp.com/api/guilds/627176990700470292/widget.png" alt="Discord server"/></a></p>
 
 # Discord-XP
 A lightweight and easy to use framework for discord bots, uses MongoDB.
 
+# Bugs, Glitches and Issues
+If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
+
+# Help
+If you need help feel free to join our <a href="https://discord.gg/6xR9ruy">discord server</a> to talk and help you with your code.
 # Download
 You can download it from npm:
 ```cli
@@ -70,6 +75,8 @@ const lb = leaderboard.map(e => `${e.position}. ${e.username}#${e.discriminator}
 
 message.channel.send(`**Leaderboard**:\n\n${lb.join("\n\n")}`);
 ```
+
+*Is time for you to get creative..*
 
 # Methods
 **createUser**
