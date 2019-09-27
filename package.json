@@ -1,0 +1,38 @@
+{
+  "name": "discord-xp",
+  "version": "0.0.1",
+  "description": "A lightweight and easy to use economy framework for discord bots, uses MongoDB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrAugu/discord-xp.git"
+  },
+  "keywords": [
+    "discord",
+    "economy",
+    "discord.js",
+    "bot",
+    "bots",
+    "leveling",
+    "xp",
+    "discord-levels",
+    "discord-xp",
+    "mongo",
+    "mongo-db"
+    "mongoose",
+    "mongodb",
+    "discord-eco"
+  ],
+  "author": "MrAugu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrAugu/discord-xp/issues"
+  },
+  "homepage": "https://github.com/MrAugu/discord-xp#readme",
+  "dependencies": {
+    "mongoose": "^5.7.1"
+  }
+}
