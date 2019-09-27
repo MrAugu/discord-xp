@@ -196,4 +196,43 @@ class DiscordXp {
     return user;
   }
 
+  /**
+  * @param {string} [guildId] - Discord guild id.
+  * @param {number} [limit] - Amount of maximum enteries to return.
+  */
+
+
+  async static fetchLeaderboard(guildId, limit) {
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+    if (!limit) throw new TypeError("A limit was not provided.");
+
+    const users = await levels.find({ guildID: guildId });
+
+    return users.slice(0, limit);
+  }
+
+  /**
+  * @param {string} [client] - Your Discord.CLient.
+  * @param {array} [leaderboard] - The output from 'fetchLeaderboard' function.
+  */
+
+  static computeLeaderboard(client, leaderboard) {
+    if (!client) throw new TypeError("A client was not provided.");
+    if (!leaderboard) throw new TypeError("A leaderboard id was not provided.");
+
+    if (leaderboard.length < 1) return [];
+
+    const computedArray = [];
+
+    leaderboard.map(key => {
+      computedArray.push({
+        guildID: key.guildID,
+        userID: key.userID,
+        xp: key.xp,
+        level: key.level,
+        position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1)
+      });
+    });
+  }
+
 }
