@@ -67,13 +67,36 @@ class DiscordXp {
     if (!xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
-    if (!user) return false;
+
+    if (!user) {
+      const newUser = new levels({
+        userID: userId,
+        guildID: guildId,
+        xp: xp,
+        level: Math.floor(0.1 * Math.sqrt(xp))
+      });
+
+      await newUser.save().catch(e => console.log(`Failed to save new user.`));
+
+      if (Math.floor(0.1 * Math.sqrt(xp)) > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const lvl = user.level;
 
     user.xp += xp;
+    user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
     user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
 
-    return user;
+    if (lvl < user.level) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -91,6 +114,7 @@ class DiscordXp {
     if (!user) return false;
 
     user.level += levels;
+    user.xp = user.level * user.level * 100;
 
     user.save().catch(e => console.log(`Failed to append level: ${e}`) );
 
@@ -112,6 +136,7 @@ class DiscordXp {
     if (!user) return false;
 
     user.xp = xp;
+    user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
     user.save().catch(e => console.log(`Failed to set xp: ${e}`) );
 
@@ -133,6 +158,7 @@ class DiscordXp {
     if (!user) return false;
 
     user.level = level;
+    user.xp = level * level * 100;
 
     user.save().catch(e => console.log(`Failed to set level: ${e}`) );
 
@@ -169,6 +195,7 @@ class DiscordXp {
     if (!user) return false;
 
     user.xp -= xp;
+    user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
     user.save().catch(e => console.log(`Failed to subtract xp: ${e}`) );
 
@@ -190,6 +217,7 @@ class DiscordXp {
     if (!user) return false;
 
     user.level -= levels;
+    user.xp = level * level * 100;
 
     user.save().catch(e => console.log(`Failed to subtract levels: ${e}`) );
 
@@ -236,5 +264,4 @@ class DiscordXp {
 
     return computedArray;
   }
-
 }
