@@ -224,15 +224,17 @@ class DiscordXp {
 
     const computedArray = [];
 
-    leaderboard.map(key => {
-      computedArray.push({
+    leaderboard.map(key => computedArray.push({
         guildID: key.guildID,
         userID: key.userID,
         xp: key.xp,
         level: key.level,
-        position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1)
-      });
-    });
+        position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
+        username: client.users.get(key.userID) ? client.users.get(key.userID).username : "Unknown",
+        discriminator: client.users.get(key.userID) ? client.users.get(key.userID).discriminator : "0000"
+      }));
+
+    return computedArray;
   }
 
 }
