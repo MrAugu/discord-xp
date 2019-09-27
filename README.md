@@ -2,7 +2,7 @@
 <p align="center"><img src="https://img.shields.io/npm/v/discord-xp"> <img src="https://img.shields.io/github/repo-size/MrAugu/discord-xp"> <img src="https://img.shields.io/npm/l/discord-xp"> <img src="https://img.shields.io/github/contributors/MrAugu/discord-xp"> <img src="https://img.shields.io/github/package-json/dependency-version/MrAugu/discord-xp/mongoose"> <a href="https://discord.gg/6xR9ruy"><img src="https://discordapp.com/api/guilds/627176990700470292/widget.png" alt="Discord server"/></a></p>
 
 # Discord-XP
-A lightweight and easy to use framework for discord bots, uses MongoDB.
+A lightweight and easy to use xp framework for discord bots, uses MongoDB.
 
 # Bugs, Glitches and Issues
 If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
