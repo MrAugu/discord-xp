@@ -79,11 +79,7 @@ class DiscordXp {
 
       await newUser.save().catch(e => console.log(`Failed to save new user.`));
 
-      if (Math.floor(0.1 * Math.sqrt(xp)) > 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return (Math.floor(0.1 * Math.sqrt(xp)) > 0);
     };
 
     user.xp += xp;
@@ -91,11 +87,7 @@ class DiscordXp {
 
     await user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
 
-    if (Math.floor(0.1 * Math.sqrt(user.xp -= xp)) < user.level) {
-      return true;
-    } else {
-      return false;
-    }
+    return (Math.floor(0.1 * Math.sqrt(user.xp -= xp)) < user.level);
   }
 
   /**
