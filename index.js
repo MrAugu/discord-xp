@@ -65,7 +65,7 @@ class DiscordXp {
   static async appendXp(userId, guildId, xp) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (!xp) throw new TypeError("An amount of xp was not provided.");
+    if (xp !== 0 && !xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
 
@@ -121,7 +121,7 @@ class DiscordXp {
   static async setXp(userId, guildId, xp) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (!xp) throw new TypeError("An amount of xp was not provided.");
+    if (xp !== 0 && !xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
@@ -180,7 +180,7 @@ class DiscordXp {
   static async subtractXp(userId, guildId, xp) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (!xp) throw new TypeError("An amount of xp was not provided.");
+    if (xp !== 0 && !xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
@@ -188,6 +188,7 @@ class DiscordXp {
     user.xp -= xp;
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
+   
     user.save().catch(e => console.log(`Failed to subtract xp: ${e}`) );
 
     return user;
@@ -202,7 +203,7 @@ class DiscordXp {
   static async subtractLevel(userId, guildId, levelss) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (!levels) throw new TypeError("An amount of levels was not provided.");
+    if (!levelss) throw new TypeError("An amount of levels was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
