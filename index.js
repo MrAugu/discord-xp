@@ -250,8 +250,8 @@ class DiscordXp {
         xp: key.xp,
         level: key.level,
         position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
-        username: client.users.get(key.userID) ? client.users.get(key.userID).username : "Unknown",
-        discriminator: client.users.get(key.userID) ? client.users.get(key.userID).discriminator : "0000"
+        username: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).username : "Unknown",
+        discriminator: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).discriminator : "0000"
       }));
 
     return computedArray;
