@@ -4,6 +4,17 @@
 # Discord-XP
 A lightweight and easy to use xp framework for discord bots, uses MongoDB.
 
+# Changelog
+- **16 July 2020** - Added `xpFor` method to calculate xp required for a specific level.
+```js
+/* xpFor Example */
+const Levels = require("discord-xp");
+// Returns the xp required to reach level 30.
+var xpRequired = Levels.xpFor(30);
+
+console.log(xpRequired); // Output: 90000
+```
+
 # Bugs, Glitches and Issues
 If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
 
@@ -188,4 +199,14 @@ Levels.fetch(<Discord Client>, <Levels.fetchLeaderboard output>);
 - Output:
 ```
 Array [Objects]
+```
+**xpFor**
+
+It returns a number that indicates amount of xp required to reach a level based on the input.
+```js
+Levels.xpFor(<Target Level Number>);
+```
+- Output:
+```
+Number
 ```
