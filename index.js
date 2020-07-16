@@ -245,16 +245,26 @@ class DiscordXp {
     const computedArray = [];
 
     leaderboard.map(key => computedArray.push({
-        guildID: key.guildID,
-        userID: key.userID,
-        xp: key.xp,
-        level: key.level,
-        position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
-        username: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).username : "Unknown",
-        discriminator: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).discriminator : "0000"
-      }));
+      guildID: key.guildID,
+      userID: key.userID,
+      xp: key.xp,
+      level: key.level,
+      position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
+      username: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).username : "Unknown",
+      discriminator: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).discriminator : "0000"
+    }));
 
     return computedArray;
+  }
+  
+  /*
+  * @param {number} [targetLevel] - Xp required to reach that level.
+  */
+  static xpFor (targetLevel) {
+    if (isNaN(targetLevel) || isNaN(parseInt(targetLevel, 10))) throw new TypeError("Target level should be a valid number.");
+    if (isNaN(targetLevel)) targetLevel = parseInt(targetLevel, 10);
+    if (targetLevel < 1) throw new RangeError("Target level should be a positive number.");
+    return targetLevel * targetLevel * 100;
   }
 }
 
