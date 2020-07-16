@@ -1,6 +1,6 @@
 {
   "name": "discord-xp",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A lightweight and easy to use economy framework for discord bots, uses MongoDB.",
   "main": "index.js",
   "dependencies": {
