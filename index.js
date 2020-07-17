@@ -82,7 +82,7 @@ class DiscordXp {
       return (Math.floor(0.1 * Math.sqrt(xp)) > 0);
     };
 
-    user.xp += xp;
+    user.xp += parseInt(xp, 10);
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
 
     await user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
@@ -103,8 +103,8 @@ class DiscordXp {
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
-
-    user.level += levelss;
+    
+    user.level += parseInt(levelss, 10);
     user.xp = user.level * user.level * 100;
 
     user.save().catch(e => console.log(`Failed to append level: ${e}`) );
