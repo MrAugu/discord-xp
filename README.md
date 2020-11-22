@@ -4,19 +4,8 @@
 # Discord-XP
 A lightweight and easy to use xp framework for discord bots, uses MongoDB.
 
-# Bugs, Glitches and Issues
-If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
-
-# Help
-If you need help feel free to join our <a href="https://discord.gg/rk7cVyk">discord server</a> to talk and help you with your code.
-# Download
-You can download it from npm:
-```cli
-npm i discord-xp
-```
-
 # Changelog
-- **22 November 2020**
+- **22 November 2020** (v1.1.7) `WARNING: This semi-major version contains breaking changes in the way leaderboard computing function works.`
 1. Added an optional `fetchPosition` argument to the `Levels.fetch` which will add the leaderboard rank as the `position` property. Caution: Will be slower on larger servers.
 2. `Levels.computeLeaderboard` is now asynchronous and can take in a third parameter called `fetchUsers` which will fetch all users on the leaderboard. This parameter **does not** require additional Gateway Intents. Caution: Will be substantially slower if you do not have `Guild_Members` intent and catch some users beforehand. 
 
@@ -28,6 +17,17 @@ const Levels = require("discord-xp");
 var xpRequired = Levels.xpFor(30);
 
 console.log(xpRequired); // Output: 90000
+```
+
+# Bugs, Glitches and Issues
+If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
+
+# Help
+If you need help feel free to join our <a href="https://discord.gg/rk7cVyk">discord server</a> to talk and help you with your code.
+# Download
+You can download it from npm:
+```cli
+npm i discord-xp
 ```
 
 # Setting Up
