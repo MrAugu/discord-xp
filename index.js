@@ -161,12 +161,23 @@ class DiscordXp {
   * @param {string} [guildId] - Discord guild id.
   */
 
-  static async fetch(userId, guildId) {
+  static async fetch(userId, guildId, fetchPosition = false) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
 
-    const user = await levels.findOne({ userID: userId, guildID: guildId });
+    const user = await levels.findOne({
+      userID: userId,
+      guildID: guildId
+    });
     if (!user) return false;
+
+    if (fetchPosition === true) {
+      const leaderboard = levels.find({
+        guildID: guildId
+      }).sort([['xp', 'descending']]).exec();
+
+      user.position = leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1;
+    }
 
     return user;
   }
@@ -236,7 +247,7 @@ class DiscordXp {
   * @param {array} [leaderboard] - The output from 'fetchLeaderboard' function.
   */
 
-  static computeLeaderboard(client, leaderboard) {
+  static async computeLeaderboard(client, leaderboard, fetchUsers = false) {
     if (!client) throw new TypeError("A client was not provided.");
     if (!leaderboard) throw new TypeError("A leaderboard id was not provided.");
 
@@ -244,15 +255,30 @@ class DiscordXp {
 
     const computedArray = [];
 
-    leaderboard.map(key => computedArray.push({
-      guildID: key.guildID,
-      userID: key.userID,
-      xp: key.xp,
-      level: key.level,
-      position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
-      username: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).username : "Unknown",
-      discriminator: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).discriminator : "0000"
-    }));
+    if (fetchUsers) {
+      for (const key of leaderboard) {
+        const user = await client.users.fetch(key.userID) || { username: "Unknown", discriminator: "000" };
+        computedArray.push({
+          guildID: key.guildID,
+          userID: key.userID,
+          xp: key.xp,
+          level: key.level,
+          position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
+          username: user.username,
+          discriminator: user.discriminator
+        });
+      }
+    } else {
+      leaderboard.map(key => computedArray.push({
+        guildID: key.guildID,
+        userID: key.userID,
+        xp: key.xp,
+        level: key.level,
+        position: (leaderboard.findIndex(i => i.guildID === key.guildID && i.userID === key.userID) + 1),
+        username: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).username : "Unknown",
+        discriminator: client.users.cache.get(key.userID) ? client.users.cache.get(key.userID).discriminator : "0000"
+      }));
+    }
 
     return computedArray;
   }
