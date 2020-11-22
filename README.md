@@ -4,17 +4,6 @@
 # Discord-XP
 A lightweight and easy to use xp framework for discord bots, uses MongoDB.
 
-# Changelog
-- **16 July 2020** - Added `xpFor` method to calculate xp required for a specific level.
-```js
-/* xpFor Example */
-const Levels = require("discord-xp");
-// Returns the xp required to reach level 30.
-var xpRequired = Levels.xpFor(30);
-
-console.log(xpRequired); // Output: 90000
-```
-
 # Bugs, Glitches and Issues
 If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
 
@@ -24,6 +13,21 @@ If you need help feel free to join our <a href="https://discord.gg/rk7cVyk">disc
 You can download it from npm:
 ```cli
 npm i discord-xp
+```
+
+# Changelog
+- **22 November 2020**
+1. Added an optional `fetchPosition` argument to the `Levels.fetch` which will add the leaderboard rank as the `position` property. Caution: Will be slower on larger servers.
+2. `Levels.computeLeaderboard` is now asynchronous and can take in a third parameter called `fetchUsers` which will fetch all users on the leaderboard. This parameter **does not** require additional Gateway Intents. Caution: Will be substantially slower if you do not have `Guild_Members` intent and catch some users beforehand. 
+
+- **16 July 2020** - Added `xpFor` method to calculate xp required for a specific level.
+```js
+/* xpFor Example */
+const Levels = require("discord-xp");
+// Returns the xp required to reach level 30.
+var xpRequired = Levels.xpFor(30);
+
+console.log(xpRequired); // Output: 90000
 ```
 
 # Setting Up
@@ -80,7 +84,7 @@ const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 10); // W
 
 if (rawLeaderboard.length < 1) return reply("Nobody's in leaderboard yet.");
 
-const leaderboard = Levels.computeLeaderboard(client, rawLeaderboard); // We process the leaderboard.
+const leaderboard = await Levels.computeLeaderboard(client, rawLeaderboard, true); // We process the leaderboard.
 
 const lb = leaderboard.map(e => `${e.position}. ${e.username}#${e.discriminator}\nLevel: ${e.level}\nXP: ${e.xp.toLocaleString()}`); // We map the outputs.
 
@@ -94,7 +98,7 @@ message.channel.send(`**Leaderboard**:\n\n${lb.join("\n\n")}`);
 
 Creates an entry in database for that user if it doesnt exist.
 ```js
-Levels.createUser(<UserID>, <GuildID>);
+Levels.createUser(<UserID - String>, <GuildID - String>);
 ```
 - Output:
 ```
@@ -104,7 +108,7 @@ Promise<Object>
 
 If the entry exists, it deletes it from database.
 ```js
-Levels.deleteUser(<UserID>, <GuildID>);
+Levels.deleteUser(<UserID - String>, <GuildID - String>);
 ```
 - Output:
 ```
@@ -114,7 +118,7 @@ Promise<Object>
 
 It adds a specified amount of xp to the current amount of xp for that user, in that guild. It re-calculates the level. It creates a new user with that amount of xp, if there is no entry for that user. 
 ```js
-Levels.appendXp(<UserID>, <GuildID>, <Amount>);
+Levels.appendXp(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
@@ -124,7 +128,7 @@ Promise<Boolean>
 
 It adds a specified amount of levels to current amount, re-calculates and sets the xp reqired to reach the new amount of levels. 
 ```js
-Levels.appendLevel(<UserID>, <GuildID>, <Amount>);
+Levels.appendLevel(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
@@ -134,7 +138,7 @@ Promise<Boolean/Object>
 
 It sets the xp to a specified amount and re-calculates the level.
 ```js
-Levels.setXp(<UserID>, <GuildID>, <Amount>);
+Levels.setXp(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
@@ -144,17 +148,17 @@ Promise<Boolean/Object>
 
 Calculates the xp required to reach a specified level and updates it.
 ```js
-Levels.setLevel(<UserID>, <GuildID>, <Amount>);
+Levels.setLevel(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
 Promise<Boolean/Object>
 ```
-**fetch**
+**fetch** (**Updated recently!**)
 
 Retrives selected entry from the database, if it exists.
 ```js
-Levels.fetch(<UserID>, <GuildID>);
+Levels.fetch(<UserID - String>, <GuildID - String>, <FetchPosition - Boolean>);
 ```
 - Output:
 ```
@@ -164,7 +168,7 @@ Promise<Object>
 
 It removes a specified amount of xp to the current amount of xp for that user, in that guild. It re-calculates the level.
 ```js
-Levels.appendXp(<UserID>, <GuildID>, <Amount>);
+Levels.appendXp(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
@@ -174,7 +178,7 @@ Promise<Boolean/Object>
 
 It removes a specified amount of levels to current amount, re-calculates and sets the xp reqired to reach the new amount of levels. 
 ```js
-Levels.appendLevel(<UserID>, <GuildID>, <Amount>);
+Levels.appendLevel(<UserID - String>, <GuildID - String>, <Amount - Number>);
 ```
 - Output:
 ```
@@ -184,29 +188,29 @@ Promise<Boolean/Object>
 
 It gets a specified amount of entries from the database, ordered from higgest to lowest within the specified limit of entries.
 ```js
-Levels.fetchLeaderboard(<GuildID>, <Limit>);
+Levels.fetchLeaderboard(<GuildID - String>, <Limit - Integer>);
 ```
 - Output:
 ```
 Promise<Array [Objects]>
 ```
-**computeLeaderboard**
+**computeLeaderboard** (**Updated recently!**)
 
 It returns a new array of object that include level, xp, guild id, user id, leaderboard position, username and discriminator.
 ```js
-Levels.fetch(<Discord Client>, <Levels.fetchLeaderboard output>);
+Levels.fetch(<Client - Discord.js Client>, <Leaderboard - fetchLeaderboard output>);
 ```
 - Output:
 ```
-Array [Objects]
+Promise<Array [Objects]>
 ```
 **xpFor**
 
 It returns a number that indicates amount of xp required to reach a level based on the input.
 ```js
-Levels.xpFor(<Target Level Number>);
+Levels.xpFor(<TargetLevel - Integer>);
 ```
 - Output:
 ```
-Number
+Integer
 ```
