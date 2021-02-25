@@ -45,7 +45,7 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 
 # Examples
 *Examples assume that you have setted up the module as presented in 'Setting Up' section.*
-*Following examples assume that your `Discord.Cient` is called `client`.*
+*Following examples assume that your `Discord.Client` is called `client`.*
 
 *Following examples assume that your `client.on("message", message` is called `message`.*
 
