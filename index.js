@@ -13,7 +13,8 @@ class DiscordXp {
     mongoUrl = dbUrl;
     return mongoose.connect(dbUrl, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useFindAndModify: false
     });
   }
 
