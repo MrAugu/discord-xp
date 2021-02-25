@@ -201,7 +201,7 @@ Promise<Array [Objects]>
 
 It returns a new array of object that include level, xp, guild id, user id, leaderboard position, username and discriminator.
 ```js
-Levels.fetch(<Client - Discord.js Client>, <Leaderboard - fetchLeaderboard output>);
+Levels.fetch(<Client - Discord.js Client>, <Leaderboard - fetchLeaderboard output>, <fetchUsers - boolean, disabled by default>);
 ```
 - Output:
 ```
