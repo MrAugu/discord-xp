@@ -258,7 +258,7 @@ class DiscordXp {
 
     if (fetchUsers) {
       for (const key of leaderboard) {
-        const user = await client.users.fetch(key.userID) || { username: "Unknown", discriminator: "000" };
+        const user = await client.users.fetch(key.userID) || { username: "Unknown", discriminator: "0000" };
         computedArray.push({
           guildID: key.guildID,
           userID: key.userID,
