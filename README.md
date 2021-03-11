@@ -171,7 +171,7 @@ Promise<Object>
 
 It removes a specified amount of xp to the current amount of xp for that user, in that guild. It re-calculates the level.
 ```js
-Levels.appendXp(<UserID - String>, <GuildID - String>, <Amount - Integer>);
+Levels.subtractXp(<UserID - String>, <GuildID - String>, <Amount - Integer>);
 ```
 - Output:
 ```
@@ -181,7 +181,7 @@ Promise<Boolean/Object>
 
 It removes a specified amount of levels to current amount, re-calculates and sets the xp reqired to reach the new amount of levels. 
 ```js
-Levels.appendLevel(<UserID - String>, <GuildID - String>, <Amount - Number>);
+Levels.subtractLevel(<UserID - String>, <GuildID - String>, <Amount - Number>);
 ```
 - Output:
 ```
