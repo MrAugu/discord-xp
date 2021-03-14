@@ -122,7 +122,7 @@ class DiscordXp {
   static async setXp(userId, guildId, xp) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (xp !== 0 && !xp) throw new TypeError("An amount of xp was not provided.");
+    if (xp === 0 && !xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
@@ -192,7 +192,7 @@ class DiscordXp {
   static async subtractXp(userId, guildId, xp) {
     if (!userId) throw new TypeError("An user id was not provided.");
     if (!guildId) throw new TypeError("A guild id was not provided.");
-    if (xp !== 0 && !xp) throw new TypeError("An amount of xp was not provided.");
+    if (xp === 0 && !xp) throw new TypeError("An amount of xp was not provided.");
 
     const user = await levels.findOne({ userID: userId, guildID: guildId });
     if (!user) return false;
