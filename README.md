@@ -17,6 +17,8 @@ npm update discord-xp
 ```
 
 # Changelog
+- **3 April 2021** (v1.1.11) - Adding TS typings.
+
 - **25 February 2021** (v1.1.8) - Preventing further deprection warnings to be displayed, if you encounter any of these deprecation issues, update the module.
 
 - **22 November 2020** (v1.1.7) `WARNING: This semi-major version contains breaking changes in the way leaderboard computing function works.`
