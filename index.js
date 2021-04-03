@@ -180,6 +180,11 @@ class DiscordXp {
       user.position = leaderboard.findIndex(i => i.userID === userId) + 1;
     }
 
+    
+    /* To be used with canvacord or displaying xp in a pretier fashion, with each level the cleanXp stats from 0 and goes until cleanNextLevelXp when user levels up and gets back to 0 then the cleanNextLevelXp is re-calculated */
+    user.cleanXp = user.xp - this.xpFor(user.level);
+    user.cleanNextLevelXp = this.xpFor(user.level + 1) - this.xpFor(user.level);
+    
     return user;
   }
 
