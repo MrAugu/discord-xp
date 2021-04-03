@@ -11,6 +11,8 @@ type User = {
   xp: Number;
   level: Number;
   lastUpdated: Date;
+  cleanXp: Number;
+  cleanNextLevelXp: Number;
 };
 
 type LeaderboardUser = {
