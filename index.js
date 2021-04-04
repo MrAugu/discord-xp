@@ -85,7 +85,8 @@ class DiscordXp {
 
     user.xp += parseInt(xp, 10);
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
-
+    user.lastUpdated = new Date();
+ 
     await user.save().catch(e => console.log(`Failed to append xp: ${e}`) );
 
     return (Math.floor(0.1 * Math.sqrt(user.xp -= xp)) < user.level);
@@ -107,7 +108,8 @@ class DiscordXp {
     
     user.level += parseInt(levelss, 10);
     user.xp = user.level * user.level * 100;
-
+    user.lastUpdated = new Date();
+ 
     user.save().catch(e => console.log(`Failed to append level: ${e}`) );
 
     return user;
@@ -129,7 +131,8 @@ class DiscordXp {
 
     user.xp = xp;
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
-
+    user.lastUpdated = new Date();
+  
     user.save().catch(e => console.log(`Failed to set xp: ${e}`) );
 
     return user;
@@ -151,7 +154,8 @@ class DiscordXp {
 
     user.level = level;
     user.xp = level * level * 100;
-
+    user.lastUpdated = new Date();
+    
     user.save().catch(e => console.log(`Failed to set level: ${e}`) );
 
     return user;
@@ -204,7 +208,7 @@ class DiscordXp {
 
     user.xp -= xp;
     user.level = Math.floor(0.1 * Math.sqrt(user.xp));
-
+    user.lastUpdated = new Date();
    
     user.save().catch(e => console.log(`Failed to subtract xp: ${e}`) );
 
@@ -227,7 +231,8 @@ class DiscordXp {
 
     user.level -= levelss;
     user.xp = user.level * user.level * 100;
-
+    user.lastUpdated = new Date();
+    
     user.save().catch(e => console.log(`Failed to subtract levels: ${e}`) );
 
     return user;
