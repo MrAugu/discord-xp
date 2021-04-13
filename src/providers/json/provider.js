@@ -27,6 +27,7 @@ class JsonProvider extends Provider {
     this.fileDir = this.options.path;
     if (!this.fileDir || !this._is("string", this.fileDir)) throw new Error("A the file directory path name must be a string.");
 
+    /* TODO: Also check for valid json. */
     try {
       readFileSync(this.dbPath, { encoding: "utf8" });
     } catch (e) {
@@ -36,7 +37,7 @@ class JsonProvider extends Provider {
     /**
      * The database object that gets automatically written to the database.
      * 
-     * @type {object}
+     * @type {object|null}
      */
     this.db = null;
 

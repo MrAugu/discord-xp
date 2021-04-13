@@ -41,6 +41,13 @@ client.xp = new DiscordXp.XpManager("json", {
 });
 ```
 
+# TypeScript Warning
+  If you are a typescript user, you need to declare a new XpManager for every file where you have xp related code, and because of that, we do not recomend under any way shape or form using a local storage provider such as JSON due to its increased risk of corruption due to constant writes at shorter intervals.
+
+If you are a typescript user, feel free to check the [TypeScript Tutorial here](/docs/t5-typescript.md) - coming soon!
+
+## Back to our code
+
 Now our file should look something like this:
 ```javascript
 const Discord = new Discord.Client();
