@@ -84,7 +84,7 @@ class MongoProvider extends Provider {
    */
   updateUser (id, guild_id, xp) { // eslint-disable-line no-unused-vars
     return new Promise((resolve, reject) => {
-      this.model.findOne({ user_id: id }).then((user) => {
+      this.model.findOne({ user_id: id, guild_id }).then((user) => {
         if (!user) {
           this.createUser(id, guild_id, xp).then(() => resolve(true)).catch(() => reject(false));
         } else {
@@ -93,6 +93,30 @@ class MongoProvider extends Provider {
           user.save().then(() => resolve(true)).catch(() => reject(false));
         }
       }).catch(() => reject(false));
+    });
+  }
+
+  /**
+   * The function is called when a user is fetched from the database.
+   * Returns an object: { user_id: String, guild_id: String, xp: Number, last_updated: Number }
+   * 
+   * @param {string} id - The id of the user that is being updated.
+   * @param {string} guild_id - The id of the guild of the user that is being updated.
+   * 
+   * @returns {object} - On object with properties `id`, `guild_id`, `xp`, `last_updated`.
+   */
+  getUser (id, guild_id) { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      this.model.findOne({ user_id: id, guild_id }).then((user) => {
+        if (!user) resolve(null);
+        const { user_id, guild_id, xp, last_updated } = user;
+        resolve({
+          user_id,
+          guild_id,
+          xp,
+          last_updated
+        });
+      }).catch(() => reject(null));
     });
   }
 
@@ -112,8 +136,6 @@ class MongoProvider extends Provider {
       process.exit(1);
     }
   }
-  
-
 
   /**
    * Attempts to create a connection and set up the specific instance values.
