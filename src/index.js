@@ -1,1 +1,3 @@
-module.exports = {};
+module.exports = {
+  Provider: require("./structures/Provider")
+};
