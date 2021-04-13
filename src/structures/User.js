@@ -1,6 +1,6 @@
 const { xpFor, parseLevel } = require("../utils/calculator");
 const Provider = require("../structures/Provider");
-
+const XpManager = require("./XpManager");
 /**
  * Represents a DiscordXp user.
  */
@@ -10,7 +10,14 @@ class User {
    * 
    * @type {object}
    */
-  constructor (provider, data) {
+  constructor (manager, provider, data) {
+    /**
+     * The xp manager used to instantiate this.
+     * 
+     * @type {XpManager}
+     */
+    this.manager = manager;
+
     /**
      * The provider whose data was used to instantiate this user.
      * 
@@ -75,17 +82,39 @@ class User {
     return xpFor(this.level + 1);
   }
 
+  get dynamicXp () {
+    return this.xp - xpFor(this.level);
+  }
+
+  get dynamicNextLevelXp () {
+    return xpFor(this.level + 1) - xpFor(this.level);
+  }
+
   /**
    * Fetches the rank of this user.
    * 
    * @returns {number} The rank of this user.
    */
   async fetchRank () {
-    let members = this.provider.getMembersFor(this.guildID);
+    let members = await this.provider.getMembersFor(this.guildID);
     members = members.sort((a, b) => a.xp - b.xp);
     this.rank = (members.findIndex((user) => user.user_id === this.id)) + 1;
     return this.rank;
-  } 
+  }
+
+  async appendXp (xp = 1) {
+    const oldLevel = this.level;
+    await this.provider.updateUser(this.id, this.guildID, this.xp + xp);
+    await this.refetch();
+    return parseInt(oldLevel, 10) < this.level;
+  }
+
+  async refetch () {
+    const user = await this.provider.getUser(this.id, this.guildID);
+    this.xp = user.xp;
+    if (this.rank > -1) await this.fetchRank();
+    return;
+  }
 }
 
 module.exports = User;

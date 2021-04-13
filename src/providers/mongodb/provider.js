@@ -109,10 +109,10 @@ class MongoProvider extends Provider {
     return new Promise((resolve, reject) => {
       this.model.findOne({ user_id: id, guild_id }).then((user) => {
         if (!user) resolve(null);
-        const { user_id, guild_id, xp, last_updated } = user;
+        const { user_id, xp, last_updated } = user;
         resolve({
           user_id,
-          guild_id,
+          guild_id: user.guild_id,
           xp,
           last_updated
         });

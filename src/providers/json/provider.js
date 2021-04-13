@@ -77,6 +77,8 @@ class JsonProvider extends Provider {
     return new Promise((resolve) => {
       if (this.db[`${guild_id}:${id}`]) {
         this.db[`${guild_id}:${id}`] = {
+          user_id: id,
+          guild_id,
           xp,
           last_updated: Date.now()
         };
@@ -99,12 +101,13 @@ class JsonProvider extends Provider {
    */
   getUser (id, guild_id) { // eslint-disable-line no-unused-vars
     return new Promise((resolve) => {
-      if (!this.db[`${guild_id}:${id}`]) return resolve(null);
+      const dbEntry = this.db[`${guild_id}:${id}`];
+      if (!dbEntry) return resolve(null);
       else {
-        const { user_id, guild_id, xp, last_updated } = this.db[`${guild_id}:${id}`];
+        const { user_id, xp, last_updated } = dbEntry;
         resolve({
           user_id,
-          guild_id,
+          guild_id: dbEntry.guild_id,
           xp,
           last_updated
         });
@@ -166,6 +169,7 @@ class JsonProvider extends Provider {
       set: (obj, prop, value) => {
         obj[prop] = value;
         write();
+        return true;
       }
     });
   }
