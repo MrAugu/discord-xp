@@ -14,7 +14,8 @@
   "devDependencies": {
     "eslint": "^7.24.0",
     "eslint-plugin-jsdoc": "^32.3.0",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "jsdoc-template": "^1.2.0"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,8 @@
 {
   "source": {
-    "include": ["src","src/structures", "src/utils", "src/providers/json", "src/providers/mongodb"],
+    "include": ["src/structures", "src/utils"],
     "includePattern": ".js$",
-    "excludePattern": "(node_modules/|docs)"
+    "excludePattern": "(node_modules/|docs)|providers"
   },
   "plugins": ["plugins/markdown"],
   "templates": {
@@ -10,7 +10,9 @@
     "monospaceLinks": true
   },
   "opts": {
-    "recursive": true,
-    "destination": "./docs/"
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "recurse": true,
+    "tutorials": "./tutorials"
   }
 }

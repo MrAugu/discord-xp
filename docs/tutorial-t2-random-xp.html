@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Tutorial: Giving random xp on every message</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Tutorial: Giving random xp on every message</h1>
+
+    <section>
+
+<header>
+    
+
+    <h2>Giving random xp on every message</h2>
+</header>
+
+<article>
+    <p>In the previous tutorial we had set up the <code>XpManager</code>, and now it's time to use it! We are going to do one of the most notorious things an xp bot does: giving users a random amount of xp on every message, so let's get started! Our file should look something around this lines:</p>
+<pre class="prettyprint source lang-javascript"><code>const Discord = new Discord.Client();
+const client = new Discord.Client();
+const DiscordXp = require(&quot;discord-xp&quot;);
+client.xp = new DiscordXp.XpManager(&quot;mongodb&quot;, {
+  &quot;url&quot;: &quot;mongodb://host:port/mydb&quot;
+}); // We have attached our xp manager to our discord client so we can access it from anywhere.
+
+client.on(&quot;ready&quot;, () => {
+  console.log(&quot;Bot is ready!&quot;);
+});
+
+client.on(&quot;message&quot;, async (message) => {
+  if (message.author.bot) return; // If the author is a bot, we do nothing.
+
+  if (message.content === &quot;!hello&quot;) {
+    return message.reply(&quot;Hello darling!&quot;); // If a human user sends !hello, we respond with 'Hello darling!'.
+  }
+});
+
+client.login(&quot;MySuperSecretTokenIShallNeverReveal&quot;);
+</code></pre>
+<p>In order to earn xp, users have to send messges in a discord server, therefore we need to check for that before doing anything related to leveling.</p>
+<pre class="prettyprint source lang-javascript"><code>if (message.guild) {
+  // Our code will go here.
+}
+</code></pre>
+<p>In the <code>message</code> event we are going to search for the user or create it if its not in the database, using <code>XpManager#fetchOrCreate</code> function (see <a href="/docs/XpManager.html#fetchOrCreate">XpManager#fetchOrCreate</a>).</p>
+<pre class="prettyprint source lang-javascript"><code>if (message.guild) {
+  const user = await client.xp.fetchOrCreate(message.author.id, message.guild.id);
+}
+</code></pre>
+<p>Now we have to get a random amount of xp, in this case I will go for a random amount of xp between 1 and 30.</p>
+<pre class="prettyprint source lang-javascript"><code>if (message.guild) {
+  const user = await client.xp.fetchOrCreate(message.author.id, message.guild.id);
+  const randomAmountOfXp = Math.floor(Math.random() * 29) + 1;
+}
+</code></pre>
+<p>And now we're going to add this xp to the user using the <code>User#appendXp</code> function (see <a href="/docs/User.html#appendXp">User#appendXp</a>), which returns an object with the the following properties: <code>oldLevel</code> and <code>newLevel</code> - in order to see if the user has leveled up or not. We are going to store these values in the <code>xp</code> variable.</p>
+<pre class="prettyprint source lang-javascript"><code>if (message.guild) {
+  const user = await client.xp.fetchOrCreate(message.author.id, message.guild.id);
+  const randomAmountOfXp = Math.floor(Math.random() * 29) + 1;
+  const xp = await user.appendXp(randomAmountOfXp); 
+}
+</code></pre>
+<p>And now we check if the user has leveled up or not, we can use the <code>User#fetchRank</code> function to get the <code>User#rank</code> property that we can use.</p>
+<pre class="prettyprint source lang-javascript"><code>if (message.guild) {
+  const user = await client.xp.fetchOrCreate(message.author.id, message.guild.id);
+  const randomAmountOfXp = Math.floor(Math.random() * 29) + 1;
+  const xp = await user.appendXp(randomAmountOfXp); // We add the xp.
+
+  if (xp.oldLevel &lt; xp.newLevel) { // Check if the new level is bigger than the older level which used had before adding the xp. 
+    await user.fetchRank(); // We call this so we can use `User#rank`. 
+    message.reply(`:tada: Well done, you've leveled up to **${xp.newLevel}**, you are now number **#${user.rank}** in the leaderboard!`);
+  }
+}
+</code></pre>
+<p>Now, our file should look something like this:</p>
+<pre class="prettyprint source lang-javascript"><code>const Discord = new Discord.Client();
+const client = new Discord.Client();
+const DiscordXp = require(&quot;discord-xp&quot;);
+client.xp = new DiscordXp.XpManager(&quot;mongodb&quot;, {
+  &quot;url&quot;: &quot;mongodb://host:port/mydb&quot;
+}); // We have attached our xp manager to our discord client so we can access it from anywhere.
+
+client.on(&quot;ready&quot;, () => {
+  console.log(&quot;Bot is ready!&quot;);
+});
+
+client.on(&quot;message&quot;, async (message) => {
+  if (message.author.bot) return; // If the author is a bot, we do nothing.
+
+  if (message.guild) {
+    const user = await client.xp.fetchOrCreate(message.author.id, message.guild.id);
+    const randomAmountOfXp = Math.floor(Math.random() * 29) + 1;
+    const xp = await user.appendXp(randomAmountOfXp); // We add the xp.
+
+    if (xp.oldLevel &lt; xp.newLevel) { // Check if the new level is bigger than the older level which used had before adding the xp. 
+      await user.fetchRank(); // We call this so we can use `User#rank`. 
+      message.reply(`:tada: Well done, you've leveled up to **${xp.newLevel}**, you are now number **#${user.rank}** in the leaderboard!`);
+    }
+  }
+
+  if (message.content === &quot;!hello&quot;) {
+    return message.reply(&quot;Hello darling!&quot;); // If a human user sends !hello, we respond with 'Hello darling!'.
+  }
+});
+
+client.login(&quot;MySuperSecretTokenIShallNeverReveal&quot;);
+</code></pre>
+<p>In the next tutorial we'll see how we can make a rank command!</p>
+</article>
+
+</section>
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Provider.html">Provider</a></li><li><a href="User.html">User</a></li><li><a href="XpManager.html">XpManager</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-t1-setting-up.html">Settings Up</a></li><li><a href="tutorial-t2-random-xp.html">Giving random xp on every message</a></li></ul><h3>Global</h3><ul><li><a href="global.html#parseLevel">parseLevel</a></li><li><a href="global.html#xpFor">xpFor</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 13 2021 18:29:37 GMT+0300 (Eastern European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

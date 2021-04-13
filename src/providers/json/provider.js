@@ -4,6 +4,8 @@ const { sep } = require("path");
 
 /**
  * Represents the provider class for MongoDB.
+ * 
+ * @augments Provider
  */
 class JsonProvider extends Provider {
   constructor (...options) {

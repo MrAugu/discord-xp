@@ -79,12 +79,16 @@ class User {
 
   /**
    * @returns {number} The amount of xp required to reach the next level of the user.
+   * @example
+   * console.log(user.nextLevelXp); // 400
    */
   get nextLevelXp () {
     return xpFor(this.level + 1);
   }
 
   /**
+   * The amount of xp earned since the last level up.
+   * 
    * @returns {number} The amount of xp earned since the last level up.
    */
   get dynamicXp () {
@@ -92,6 +96,8 @@ class User {
   }
 
   /**
+   * The amount of xp that user needs to earn from last level up to the next level up.
+   * 
    * @returns {number} The amount of xp that user needs to earn from last level up to the next level up.
    */
   get dynamicNextLevelXp () {
