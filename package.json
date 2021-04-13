@@ -6,7 +6,11 @@
   "dependencies": {
     "mongoose": "^5.11.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.24.0",
+    "eslint-plugin-jsdoc": "^32.3.0",
+    "jest": "^26.6.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MrAugu/discord-xp.git"
@@ -29,7 +33,7 @@
     "discord-eco",
     "framework"
   ],
-  "author": "MrAugu",
+  "author": "MrAugu#7917 <mraugu@yahoo.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MrAugu/discord-xp/issues"
