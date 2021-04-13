@@ -86,4 +86,4 @@ const target = message.mentions.users.first() || message.author; // Grab the tar
     });
 ```
 
-*Is time for you to get creative..*
+*It's time for you to get creative..*
