@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src",
-    "test": "jest --config jest.config.js"
+    "test": "jest --config jest.config.js",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "dependencies": {
     "mongoose": "^5.11.11"

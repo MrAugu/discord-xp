@@ -1,0 +1,16 @@
+{
+  "source": {
+    "include": ["src","src/structures", "src/utils", "src/providers/json", "src/providers/mongodb"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLins": true,
+    "monospaceLinks": true
+  },
+  "opts": {
+    "recursive": true,
+    "destination": "./docs/"
+  }
+}
