@@ -3,6 +3,10 @@
   "version": "1.1.14",
   "description": "A lightweight and easy to use economy framework for discord bots, uses MongoDB.",
   "main": "index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "test": "jest --config jest.config.js"
+  },
   "dependencies": {
     "mongoose": "^5.11.11"
   },
