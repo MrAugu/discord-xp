@@ -122,6 +122,20 @@ class User {
   }
 
   /**
+   * Increases the user's xp by a certain amount.
+   * 
+   * @param {number} xp - The amount of xp to add to the user. 
+   * @returns {Promise<object>} An object containing `oldLevel` and `newLevel` properties.
+   */
+   async appendLevel (xp = 1) {
+    const oldXp = this.xp;
+    await this.provider.updateUser(this.id, this.guildID, this.xp + xp);
+    await this.refetch();
+    return { oldXp, newXp: this.xp };
+  }
+
+
+  /**
    * Sets the user xp to a specified number.
    * 
    * @param {number} xp - The amount of xp to set. 
