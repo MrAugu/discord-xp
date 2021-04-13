@@ -5,7 +5,7 @@ const LevelSchema = new mongoose.Schema({
   guildID: { type: String },
   xp: { type: Number, default: 0 },
   level: { type: Number, default: 0 },
-  lastUpdated: { type: Date, default: new Date() }
+  lastUpdated: { type: Date, default: new Date() },
 });
 
-module.exports = mongoose.model('Levels', LevelSchema);
+module.exports = mongoose.model("Levels", LevelSchema);
