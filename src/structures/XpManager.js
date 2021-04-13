@@ -5,7 +5,25 @@ const providers = {
 };
 const User = require("../structures/User");
 
+/**
+ * @typedef {object} mongodbProviderOptions
+ * @property {string} url - The a valid mongodb database url.
+ */
+
+/**
+ * @typedef {object} jsonProviderOptions
+ * @property {string} fileName - A json file name for the json storage
+ * @property {string} path - The path to the `fileName`, usually `__dirname`.
+ */
+
+/**
+ * Represents an instance of discorrd xp. 
+ */
 class XpManager {
+  /**
+   * @param {string} provider - The name of the provider, currently supporting `mongodb` and `json`. 
+   * @param {mongodbProviderOptions|jsonProviderOptions} options - The options for your specific provider. 
+   */
   constructor (provider, options) {
     if (!provider || !Object.keys(providers).includes(provider.toLowerCase())) throw new Error(`You must specify a storage provider name, currently supporting \`${Object.keys(providers).join("`, `")}\`.`);
     if (!options) throw new Error("You need to specify the provider options.");

@@ -1,3 +1,6 @@
+/**
+ * Test.
+ */
 module.exports = {
   /* Classes */
   XpManager: require("./structures/XpManager"),

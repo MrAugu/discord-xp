@@ -8,7 +8,9 @@ class User {
   /**
    * The data used to instantiate this user.
    * 
-   * @type {object}
+   * @param {XpManager} manager - The manager used to instantiate this class.
+   * @param {Provider} provider - The provider used to instantiate this class.
+   * @param {object} data - The database entry data for this user.
    */
   constructor (manager, provider, data) {
     /**
@@ -127,7 +129,7 @@ class User {
    * @param {number} xp - The amount of xp to add to the user. 
    * @returns {Promise<object>} An object containing `oldLevel` and `newLevel` properties.
    */
-   async appendLevel (xp = 1) {
+  async appendLevel (xp = 1) {
     const oldXp = this.xp;
     await this.provider.updateUser(this.id, this.guildID, this.xp + xp);
     await this.refetch();
