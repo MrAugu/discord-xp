@@ -82,10 +82,16 @@ class User {
     return xpFor(this.level + 1);
   }
 
+  /**
+   * @returns {number} The amount of xp earned since the last level up.
+   */
   get dynamicXp () {
     return this.xp - xpFor(this.level);
   }
 
+  /**
+   * @returns {number} The amount of xp that user needs to earn from last level up to the next level up.
+   */
   get dynamicNextLevelXp () {
     return xpFor(this.level + 1) - xpFor(this.level);
   }
@@ -93,7 +99,7 @@ class User {
   /**
    * Fetches the rank of this user.
    * 
-   * @returns {number} The rank of this user.
+   * @returns {Promise<number>} The rank of this user.
    */
   async fetchRank () {
     let members = await this.provider.getMembersFor(this.guildID);
@@ -102,13 +108,50 @@ class User {
     return this.rank;
   }
 
+  /**
+   * Increases the user's xp by a certain amount.
+   * 
+   * @param {number} xp - The amount of xp to add to the user. 
+   * @returns {Promise<object>} An object containing `oldLevel` and `newLevel` properties.
+   */
   async appendXp (xp = 1) {
     const oldLevel = this.level;
     await this.provider.updateUser(this.id, this.guildID, this.xp + xp);
     await this.refetch();
-    return parseInt(oldLevel, 10) < this.level;
+    return { oldLevel, newLevel: this.level };
   }
 
+  /**
+   * Sets the user xp to a specified number.
+   * 
+   * @param {number} xp - The amount of xp to set. 
+   * @returns {Promise<object>} An object containing `oldLevel` and `newLevel` properties.
+   */
+  async setXp (xp = 0) {
+    const oldLevel = this.level;
+    await this.provider.updateUser(this.id, this.guildID, xp);
+    await this.refetch();
+    return { oldLevel, newLevel: this.level };    
+  }
+
+  /**
+   * Sets user's level to a specified number.
+   * 
+   * @param {number} level - The level to set the user. 
+   * @returns {Promise<object>} An object containing `oldXp` and `newXp` properties.
+   */
+  async setLevel (level = 0) {
+    const oldXp = this.xp;
+    await this.provider.updateUser(this.id, this.guildID, xpFor(level));
+    await this.refetch();
+    return { oldXp, newXp: this.xp };    
+  }
+
+  /**
+   * Refetches the properties of the user.
+   * 
+   * @returns {Promise<void>} It returns nothing.
+   */
   async refetch () {
     const user = await this.provider.getUser(this.id, this.guildID);
     this.xp = user.xp;

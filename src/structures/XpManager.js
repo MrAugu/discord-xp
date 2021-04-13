@@ -18,6 +18,13 @@ class XpManager {
     this.provider = new providers[provider.toLowerCase()](options);
   }
 
+  /**
+   * Fetches the user from database and returns an instance of user client.
+   * 
+   * @param {string} id - The id of the user you want to fetch.
+   * @param {string} guildID - The guild user is a member of.
+   * @returns {Promise<User|null>} Returns an user object or nothing.
+   */
   fetch (id, guildID) {
     return new Promise((resolve, reject) => {
       this.provider.getUser(id, guildID).then((user) => {
@@ -28,12 +35,28 @@ class XpManager {
     });
   }
 
+  /**
+   * It adds another user to the database.
+   * 
+   * @param {string} id - The id of the user.
+   * @param {string} guildID - The guild id the user is in.
+   * @param {number} xp - The amount of xp to set the user, default to 0.
+   * @returns {boolean} Whether or not the user has been created.
+   */
   create (id, guildID, xp = 0) {
     return new Promise((resolve, reject) => {
       this.provider.createUser(id, guildID, xp).then(resolve).catch(reject);
     });
   }
 
+  /**
+   * Fetches the user or creates it and then fetches it.
+   * 
+   * @param {*} id - The id of the user.
+   * @param {*} guildID - The id of the guild user is in.
+   * @param {*} xp - The initial amount of xp to set.
+   * @returns {User} The user returned.
+   */
   async fetchOrCreate (id, guildID, xp = 0) {
     const user = await this.fetch(id, guildID);
     if (!user) await this.create(id, guildID, xp);
