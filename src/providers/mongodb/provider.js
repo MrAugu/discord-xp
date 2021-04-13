@@ -1,4 +1,4 @@
-const { Provider } = require("../../index");
+const Provider = require("../../structures/Provider");
 const { createConnection } = require("mongoose");
 const { UserSchema } = require("./models/users");
 
@@ -149,8 +149,9 @@ class MongoProvider extends Provider {
   async init () {
     while (this.remainingAttempts > 0 && !this.connected) {
       if (this.remainingAttempts !== 10) console.warn(`Connection to the database failed, attempting to connect. (${this.remainingAttempts} remaining attempts)`);
-      const hasConnected = await this._createConnection();
-      if (hasConnected) break;
+      const hasConnected = await this._createConnection().catch(console.error);
+      if (hasConnected === true) break;
+      this.remainingAttempts--;
     }
     if (!this.connected) {
       console.error("Fatal Error: Connection to the database has failed after 10 attempts, exiting the process.");
@@ -174,14 +175,9 @@ class MongoProvider extends Provider {
         this.db = connection;
         this.connected = true;
         this.model = this.db.model("levels", UserSchema);
-        resolve({
-          connected: true
-        });
+        resolve(true);
       }).catch((reason) => {
-        reject({
-          connected: false,
-          reason
-        });
+        reject(reason);
       });
     });
   }

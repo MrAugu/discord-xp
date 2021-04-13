@@ -1,5 +1,5 @@
-const { Provider } = require("../../index");
-const { writeFile } = require("fs");
+const Provider = require("../../structures/Provider");
+const { writeFile, appendFileSync, readFileSync } = require("fs");
 const { sep } = require("path");
 
 /**
@@ -23,10 +23,18 @@ class JsonProvider extends Provider {
      * @type {string}
      */
     this.fileDir = this.options.path;
-    if (!this.fileDir || !this._is("string", this.fileName)) throw new Error("A the file directory path name must be a string.");
+    if (!this.fileDir || !this._is("string", this.fileDir)) throw new Error("A the file directory path name must be a string.");
 
+    try {
+      readFileSync(this.dbPath, { encoding: "utf8" });
+    } catch (e) {
+      appendFileSync(this.dbPath, "{}");
+    }
+    
     /**
      * The database object that gets automatically written to the database.
+     * 
+     * @type {object}
      */
     this.db = null;
 
@@ -130,7 +138,7 @@ class JsonProvider extends Provider {
    * @returns {void}
    */
   async init () {
-    this.db = this._setDb(`${this.fileDir}${sep}${this.fileName}`, console.warn);
+    this.db = this._setDb(this.dbPath, console.warn);
   }
 
   /**
@@ -172,6 +180,10 @@ class JsonProvider extends Provider {
     const array = [];
     for (const item in object) array.push(object[item]);
     return array;
+  }
+
+  get dbPath () {
+    return `${this.fileDir}${sep}${this.fileName}`;
   }
 }
 

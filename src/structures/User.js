@@ -1,5 +1,5 @@
 const { xpFor, parseLevel } = require("../utils/calculator");
-const { Provider } = require("../structures/Provider");
+const Provider = require("../structures/Provider");
 
 /**
  * Represents a DiscordXp user.

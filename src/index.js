@@ -1,13 +1,8 @@
 module.exports = {
   /* Classes */
+  XpManager: require("./structures/XpManager"),
   Provider: require("./structures/Provider"),
   User: require("./structures/User"),
-
-  /* Providers */
-  _providers: {
-    "mongodb": require("./providers/mongodb/provider"),
-    "json": require("./providers/json/provider")
-  },
 
   /* Util */
   xpFor: require("./utils/calculator").xpFor,
