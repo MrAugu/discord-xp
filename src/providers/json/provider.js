@@ -105,6 +105,26 @@ class JsonProvider extends Provider {
   }
 
   /**
+   * The function is called when a users of a guild are fetched from the database.
+   * Returns an array of objects: { user_id: String, guild_id: String, xp: Number, last_updated: Number }
+   * 
+   * @param {string} guild_id - The id of the guild whose members are fetched.
+   * 
+   * @returns {Promise<object>} - An array of objects with properties `id`, `guild_id`, `xp`, `last_updated`.
+   */
+  getMembersFor (guild_id) { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      try { 
+        const dbArray = this._arraify(this.db);
+        resolve(dbArray.filter(user => user.guild_id === guild_id));
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+      
+  /**
    * Attempts to set up the database object.
    * 
    * @returns {void}
@@ -140,6 +160,18 @@ class JsonProvider extends Provider {
         write();
       }
     });
+  }
+
+  /**
+   * Produces an array of values from a given JSON object.
+   * 
+   * @param {object} object - The object which will be converted to an array.
+   * @returns {any[]} The array.
+   */
+  _arraify (object) {
+    const array = [];
+    for (const item in object) array.push(object[item]);
+    return array;
   }
 }
 

@@ -60,6 +60,18 @@ class Provider {
   }
 
   /**
+   * The function is called when a users of a guild are fetched from the database.
+   * Returns an array of objects: { user_id: String, guild_id: String, xp: Number, last_Updated: Number }
+   * 
+   * @param {string} guild_id - The id of the guild whose members are fetched.
+   * 
+   * @returns {object} - An array of objects with properties `id`, `guild_id`, `xp`, `last_updated`.
+   */
+  async getMembersFor (guild_id) { // eslint-disable-line no-unused-vars
+    throw new Error("The provider must overwrite the `getMembersFor` function.");
+  }
+
+  /**
    * The function that is called after the provider's been initialized.
    */
   async init () {

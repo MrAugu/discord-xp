@@ -121,6 +121,27 @@ class MongoProvider extends Provider {
   }
 
   /**
+   * The function is called when a users of a guild are fetched from the database.
+   * Returns an array of objects: { user_id: String, guild_id: String, xp: Number, last_updated: Number }
+   * 
+   * @param {string} guild_id - The id of the guild whose members are fetched.
+   * 
+   * @returns {Promise<object>} - An array of objects with properties `id`, `guild_id`, `xp`, `last_updated`.
+   */
+  getMembersFor (guild_id) { // eslint-disable-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      this.model.find({ guild_id }).then((users) => {
+        resolve(users.map((user) => ({
+          user_id: user.id,
+          guild_id: user.guild_id,
+          xp: user.xp,
+          last_updated: user.last_updated
+        })));
+      }).catch((err) => reject(err));
+    });
+  }
+
+  /**
    * Attempts to establish an ongoing connection with the database.
    * 
    * @returns {void}
