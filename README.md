@@ -48,8 +48,6 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 # Examples
 *Examples can be found in /test*
 
-*Is time for you to get creative..*
-
 # Methods
 **createUser**
 
