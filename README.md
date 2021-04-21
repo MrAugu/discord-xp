@@ -119,6 +119,16 @@ Levels.fetch(<UserID - String>, <GuildID - String>, <FetchPosition - Boolean>);
 ```
 Promise<Object>
 ```
+**totalUsers**
+
+Returns the amount of database entries.
+```js
+Levels.totalUsers();
+```
+- Output:
+```
+Promise<Integer>
+```
 **subtractXp**
 
 It removes a specified amount of xp to the current amount of xp for that user, in that guild. It re-calculates the level.
