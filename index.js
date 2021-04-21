@@ -191,6 +191,10 @@ class DiscordXp {
     
     return user;
   }
+  
+  static async totalUsers() {
+    return await levels.countDocuments();
+  }
 
   /**
   * @param {string} [userId] - Discord user id.
