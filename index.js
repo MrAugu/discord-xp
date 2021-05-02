@@ -177,10 +177,13 @@ class DiscordXp {
     if (!user) return false;
 
     if (fetchPosition === true) {
-      const leaderboard = await levels.find({
+      let leaderboard = await levels.find({
         guildID: guildId
-      }).sort([['xp', 'descending']]).exec();
-
+      });
+      leaderboard = leaderboard.sort(
+      (a, b) => b.xp - a.xp
+      );
+      
       user.position = leaderboard.findIndex(i => i.userID === userId) + 1;
     }
 
@@ -248,7 +251,8 @@ class DiscordXp {
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!limit) throw new TypeError("A limit was not provided.");
 
-    var users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).exec();
+    var users = await levels.find({ guildID: guildId })
+    users = users.sort((a, b) => b.xp - a.xp);
 
     return users.slice(0, limit);
   }
