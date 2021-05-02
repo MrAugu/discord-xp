@@ -175,7 +175,7 @@ class DiscordXp {
       guildID: guildId
     });
     if (!user) return false;
-
+    let userobj = {};
     if (fetchPosition === true) {
       let leaderboard = await levels.find({
         guildID: guildId
@@ -184,15 +184,14 @@ class DiscordXp {
       (a, b) => b.xp - a.xp
       );
       
-      user.position = leaderboard.findIndex(i => i.userID === userId) + 1;
+      userobj.position = leaderboard.findIndex(i => i.userID === userId) + 1;
     }
-
-    
+    userobj.data = user;
     /* To be used with canvacord or displaying xp in a pretier fashion, with each level the cleanXp stats from 0 and goes until cleanNextLevelXp when user levels up and gets back to 0 then the cleanNextLevelXp is re-calculated */
-    user.cleanXp = user.xp - this.xpFor(user.level);
-    user.cleanNextLevelXp = this.xpFor(user.level + 1) - this.xpFor(user.level);
+    userobj.data.cleanXp = user.xp - this.xpFor(user.level);
+    userobj.data.cleanNextLevelXp = this.xpFor(user.level + 1) - this.xpFor(user.level);
     
-    return user;
+    return userobj;
   }
 
   /**
