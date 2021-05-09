@@ -2,7 +2,7 @@ In this tutorial we'll be learning to set up `discord-xp` to work with discord.j
 First, let's kick things off by creating a bot file.
 
 ```javascript
-const Discord = new Discord.Client();
+const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.on("ready", () => {
