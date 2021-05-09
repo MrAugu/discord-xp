@@ -1,7 +1,7 @@
 
 In the previous tutorial we had set up the `XpManager`, and now it's time to use it! We are going to do one of the most notorious things an xp bot does: giving users a random amount of xp on every message, so let's get started! Our file should look something around this lines:
 ```javascript
-const Discord = new Discord.Client();
+const Discord = require('discord.js');
 const client = new Discord.Client();
 const DiscordXp = require("discord-xp");
 client.xp = new DiscordXp.XpManager("mongodb", {
