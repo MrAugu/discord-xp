@@ -61,7 +61,7 @@ const lb = leaderboard.map(e => `${e.position}. ${e.username}#${e.discriminator}
 message.channel.send(`**Leaderboard**:\n\n${lb.join("\n\n")}`);
 ```
 
-- **Position on the user in the leaderboard**
+- **Position of a user in the leaderboard**
 ```js
 const target = message.mentions.users.first() || message.author; // Grab the target.
 
