@@ -61,8 +61,21 @@ const lb = leaderboard.map(e => `${e.position}. ${e.username}#${e.discriminator}
 message.channel.send(`**Leaderboard**:\n\n${lb.join("\n\n")}`);
 ```
 
-- **Canvacord Integration**
+- **Position on the user in the leaderboard**
 ```js
+const target = message.mentions.users.first() || message.author; // Grab the target.
+
+const user = await Levels.fetch(target.id, message.guild.id, true); // Selects the target from the database.
+
+console.log(user.position);
+```
+
+- **Canvacord Integration**
+
+Obviously you need the npm package `canvacord` for that. Install it with `npm install canvacord`.
+
+```js
+const canvacord = require('canvacord');
 
 const target = message.mentions.users.first() || message.author; // Grab the target.
 
