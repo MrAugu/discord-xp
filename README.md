@@ -3,7 +3,7 @@
 
 # Discord-Xp
 - A lightweight and easy to use xp framework for discord bots, uses MongoDB.
-- If you need help feel free to join our <a href="https://discord.gg/rk7cVyk">discord server</a> to talk and help you with your code.
+- If you need help feel free to join our <a href="https://discord.gg/HNw53BJVaX">discord server</a> to talk and help you with your code.
 - If you encounter any of those fell free to open an issue in our <a href="https://github.com/MrAugu/discord-xp/issues">github repository</a>.
 
 # Download & Update
