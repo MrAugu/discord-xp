@@ -30,6 +30,7 @@ declare module "discord-xp" {
     static async setURL(dbURL: string): Promise<typeof import("mongoose")>;
     static async createUser(userId: string, guildId: string): Promise<User>;
     static async deleteUser(userId: string, guildId: string): Promise<User>;
+    static async deleteGuild(guildId: string): Promise<Guild>;
     static async appendXp(userId: string, guildId: string, xp: number): Promise<boolean>;
     static async appendLevel(userId: string, guildId: string, levels: number): Promise<User>;
     static async setXp(userId: string, guildId: string, xp: number): Promise<User>;

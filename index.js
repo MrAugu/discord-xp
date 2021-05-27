@@ -303,6 +303,21 @@ class DiscordXp {
     if (targetLevel < 0) throw new RangeError("Target level should be a positive number.");
     return targetLevel * targetLevel * 100;
   }
+
+  /**
+  * @param {string} [guildId] - Discord guild id.
+  */
+
+   static async deleteGuild(guildId) {
+    if (!guildId) throw new TypeError("A guild id was not provided.");
+
+    const guild = await levels.findOne({ guildID: guildId });
+    if (!guild) return false;
+
+    await levels.deleteMany({ guildID: guildId }).catch(e => console.log(`Failed to delete guild: ${e}`));
+
+    return guild;
+  }
 }
 
 module.exports = DiscordXp;

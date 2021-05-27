@@ -69,6 +69,16 @@ Levels.deleteUser(<UserID - String>, <GuildID - String>);
 ```
 Promise<Object>
 ```
+**deleteGuild**
+
+If the entry exists, it deletes it from database.
+```js
+Levels.deleteGuild(<GuildID - String>);
+```
+- Output:
+```
+Promise<Object>
+```
 **appendXp**
 
 It adds a specified amount of xp to the current amount of xp for that user, in that guild. It re-calculates the level. It creates a new user with that amount of xp, if there is no entry for that user. 
