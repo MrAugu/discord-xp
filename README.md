@@ -17,6 +17,8 @@ npm update discord-xp
 ```
 
 # Changelog
+- **27 May 2021** (v1.1.11) - Adding deleteGuild() method.
+
 - **3 April 2021** (v1.1.11) - Adding TS typings.
 
 - **25 February 2021** (v1.1.8) - Preventing further deprection warnings to be displayed, if you encounter any of these deprecation issues, update the module.
