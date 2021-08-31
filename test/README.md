@@ -13,7 +13,7 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 *Examples assume that you have setted up the module as presented in 'Setting Up' section.*
 *Following examples assume that your `Discord.Client` is called `client`.*
 
-*Following examples assume that your `client.on("message", message` is called `message`.*
+*Following examples assume that your `client.on("messageCreate", message` is called `message`.*
 
 *Following example contains isolated code which you need to integrate in your own command handler.*
 
@@ -22,7 +22,7 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 - **Allocating Random XP For Each Message Sent**
 
 ```js
-client.on("message", async (message) => {
+client.on("messageCreate", async (message) => {
   if (!message.guild) return;
   if (message.author.bot) return;
   
@@ -30,7 +30,7 @@ client.on("message", async (message) => {
   const hasLeveledUp = await Levels.appendXp(message.author.id, message.guild.id, randomAmountOfXp);
   if (hasLeveledUp) {
     const user = await Levels.fetch(message.author.id, message.guild.id);
-    message.channel.send(`${message.author}, congratulations! You have leveled up to **${user.level}**. :tada:`);
+    message.channel.send({ content: `${message.author}, congratulations! You have leveled up to **${user.level}**. :tada:` });
   }
 });
 ```
