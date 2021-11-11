@@ -2,6 +2,21 @@ const mongoose = require("mongoose");
 const levels = require("./models/levels.js");
 var mongoUrl;
 
+//Checking if the person has NodeJS v16 or higher
+if(process.version.slice(1, 3) - 0 < 16)
+throw new Error(
+  `NodeJS Version 16 or newer is required, but you are using ${process.version}. See https://nodejs.org to update.`
+)
+
+//Checking if the person has discord.js installed
+try{
+  require('discord.js')
+} catch (e) {
+  throw new Error(
+    'Discord.JS is required for this package to work.'
+  )
+}
+
 class DiscordXp {
 
   /**
