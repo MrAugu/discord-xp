@@ -9,7 +9,6 @@ After that, you need to provide a valid mongo database url, and set it. You can 
 Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 ```
 
-# Examples
 *Examples assume that you have setted up the module as presented in 'Setting Up' section.*
 *Following examples assume that your `Discord.Client` is called `client`.*
 
@@ -19,12 +18,15 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 
 *Following example assumes that you are able to write asynchronous code (use `await`).*
 
+# Examples
 Examples:
 - [Allocating Random XP For Each Message Sent](https://github.com/MrAugu/discord-xp/blob/master/test/README.md#allocating-random-xp-for-each-message-sent)
 - [Rank Command](https://github.com/MrAugu/discord-xp/blob/master/test/README.md#rank-command)
 - [Leaderboard Command](https://github.com/MrAugu/discord-xp/blob/master/test/README.md#leaderboard-command)
 - [Position of a user in the leaderboard](https://github.com/MrAugu/discord-xp/blob/master/test/README.md#position-of-a-user-in-the-leaderboard)
 - [Canvacord Integration](https://github.com/MrAugu/discord-xp/blob/master/test/README.md#canvacord-integration)
+
+---
 
 ## Allocating Random XP For Each Message Sent
 
