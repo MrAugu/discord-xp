@@ -70,7 +70,7 @@ const user = await Levels.fetch(target.id, message.guild.id, true); // Selects t
 console.log(user.position);
 ```
 
-- **Canvacord Integration**
+## **Canvacord Integration**
 
 Obviously you need the npm package `canvacord` for that. Install it with `npm install canvacord`.
 
