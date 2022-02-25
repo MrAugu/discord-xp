@@ -19,7 +19,10 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 
 *Following example assumes that you are able to write asynchronous code (use `await`).*
 
-- **Allocating Random XP For Each Message Sent**
+Examples:
+- [Allocating Random XP For Each Message Sent]()
+
+## Allocating Random XP For Each Message Sent
 
 ```js
 client.on("messageCreate", async (message) => {
@@ -35,7 +38,7 @@ client.on("messageCreate", async (message) => {
 });
 ```
 
-- **Rank Command**
+## Rank Command
 
 ```js
 const target = message.mentions.users.first() || message.author; // Grab the target.
@@ -47,7 +50,7 @@ if (!user) return message.channel.send("Seems like this user has not earned any 
 message.channel.send(`> **${target.tag}** is currently level ${user.level}.`); // We show the level.
 ```
 
-- **Leaderboard Command**
+## Leaderboard Command
 
 ```js
 const rawLeaderboard = await Levels.fetchLeaderboard(message.guild.id, 10); // We grab top 10 users with most xp in the current server.
@@ -61,7 +64,7 @@ const lb = leaderboard.map(e => `${e.position}. ${e.username}#${e.discriminator}
 message.channel.send(`**Leaderboard**:\n\n${lb.join("\n\n")}`);
 ```
 
-- **Position of a user in the leaderboard**
+## Position of a user in the leaderboard
 ```js
 const target = message.mentions.users.first() || message.author; // Grab the target.
 
@@ -70,7 +73,7 @@ const user = await Levels.fetch(target.id, message.guild.id, true); // Selects t
 console.log(user.position);
 ```
 
-## **Canvacord Integration**
+## Canvacord Integration
 
 Obviously you need the npm package `canvacord` for that. Install it with `npm install canvacord`.
 
