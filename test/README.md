@@ -87,7 +87,6 @@ const target = message.mentions.users.first() || message.author; // Grab the tar
         .setRequiredXP(Levels.xpFor(user.level + 1)) // We calculate the required Xp for the next level
         .setRank(user.position) // Position of the user on the leaderboard
         .setLevel(user.level) // Current Level of the user
-        .setStatus(target.presence.status)
         .setProgressBar("#FFFFFF")
         .setUsername(target.username)
         .setDiscriminator(target.discriminator);
@@ -98,5 +97,41 @@ const target = message.mentions.users.first() || message.author; // Grab the tar
         message.channel.send(attachment);
     });
 ```
+While this previous example works **perfectly** fine a lot of people asked how they could only get the required xp needed for the next level and the actual xp progress in the current level.
+
+```js
+
+<user>.cleanXp // Gets the current xp in the current level
+<user>.cleanNextLevelXp // Gets the actual xp needed to reach the next level
+
+```
+
+Resulting code:
+
+```js
+const canvacord = require('canvacord');
+
+const target = message.mentions.users.first() || message.author; // Grab the target.
+
+    const user = await Levels.fetch(target.id, message.guild.id, true); // Selects the target from the database.
+    
+    const rank = new canvacord.Rank() // Build the Rank Card
+        .setAvatar(target.displayAvatarURL({format: 'png', size: 512}))
+        .setCurrentXP(user.cleanXp) // Current User Xp for the current level
+        .setRequiredXP(user.cleanNextLevelXp) //The required Xp for the next level
+        .setRank(user.position) // Position of the user on the leaderboard
+        .setLevel(user.level) // Current Level of the user
+        .setProgressBar("#FFFFFF")
+        .setUsername(target.username)
+        .setDiscriminator(target.discriminator);
+
+    rank.build()
+        .then(data => {
+        const attachment = new Discord.MessageAttachment(data, "RankCard.png");
+        message.channel.send(attachment);
+    });
+
+```
+
 
 *It's time for you to get creative..*
