@@ -248,9 +248,9 @@ class DiscordXp {
     if (!guildId) throw new TypeError("A guild id was not provided.");
     if (!limit) throw new TypeError("A limit was not provided.");
 
-    var users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).exec();
+    const users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).limit(limit).exec();
 
-    return users.slice(0, limit);
+    return users;
   }
 
   /**
