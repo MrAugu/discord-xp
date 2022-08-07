@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-const mongoose = require("mongoose");
-const levels = require("./models/levels.js");
-var mongoUrl;
-=======
 /* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 const levels = require('./models/levels.js');
@@ -15,7 +10,6 @@ if(process.version.slice(1, 3) - 0 < 16) {
 		`NodeJS Version 16 or newer is required, but you are using ${process.version}. See https://nodejs.org to update.`,
 	);
 }
->>>>>>> Stashed changes
 
 class DiscordXp {
 
@@ -36,10 +30,10 @@ class DiscordXp {
 	/**
   * @param {string} [guildId] - Discord guild id.
   * @param {number} [level] - level.
-  *@param {string} [roleId] - Role reward id.
+  *@param {string} [roleId] - Level for which the reward will be created.
   */
 
-	static async addRoleReward(guildId, level, roleId) {
+	static async createRoleReward(guildId, level, roleId) {
 		if (!guildId) throw new TypeError('A guild id was not provided.');
 		if (!level) throw new TypeError('A level was not provided.');
 		if (!roleId) throw new TypeError('A role id was not provided.');
@@ -53,7 +47,6 @@ class DiscordXp {
 				},
 			},
 		});
-		// guild entry does not exist
 		if(!guildEntry) {
 			const newReward = new rewards({
 				guildID: guildId,
@@ -75,8 +68,7 @@ class DiscordXp {
 
 	/**
   * @param {string} [guildId] - Discord guild id.
-  * @param {number} [level] - level.
-  *@param {string} [roleId] - Role reward id.
+  * @param {number} [level] - Level for which the reward will be deleted.
   */
 
 	static async deleteRoleReward(guildId, level) {
@@ -105,8 +97,7 @@ class DiscordXp {
 
 	/**
   * @param {string} [guildId] - Discord guild id.
-  * @param {number} [level] - level.
-  *@param {string} [roleId] - Role reward id.
+  * @param {number} [level] - Level for which the reward will be fetched.
   */
 
 	static async fetchRoleReward(guildId, level) {
@@ -130,7 +121,7 @@ class DiscordXp {
 
 	/**
   * @param {string} [client] - Your Discord.CLient.
-  * @param {array} [leaderboard] - The output from 'fetchLeaderboard' function.
+  * @param {string} [guildId] - The guild which entries should be cleaned.
   */
 
 	static async cleanDatabase(client, guildId) {
@@ -145,19 +136,14 @@ class DiscordXp {
 
 
 		for (const user of users) {
-
 			try {
 				const isUser = await client.users.fetch(user.userID);
-
 			}
 			catch (error) {
-				console.error(error);
-				console.log(user);
 				computedArray.push(user.userID);
 				return await levels.findOneAndDelete({ userID: user.userID, guildID: guildId }).catch(e => console.log(`Failed to delete user: ${e}`));
 			}
 		}
-
 
 		return computedArray;
 	}
@@ -395,17 +381,10 @@ class DiscordXp {
 		if (!guildId) throw new TypeError('A guild id was not provided.');
 		if (!limit) throw new TypeError('A limit was not provided.');
 
-<<<<<<< Updated upstream
-    const users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).limit(limit).exec();
+		const users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).limit(limit).exec();
 
-    return users;
-  }
-=======
-		const users = await levels.find({ guildID: guildId }).sort([['xp', 'descending']]).exec();
-
-		return users.slice(0, limit);
+		return users;
 	}
->>>>>>> Stashed changes
 
 	/**
   * @param {string} [client] - Your Discord.CLient.

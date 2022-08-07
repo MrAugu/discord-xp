@@ -17,6 +17,9 @@ npm update discord-xp
 ```
 
 # Changelog
+- **07 August 2022** (v1.1.17) - Adding cleanDatabase() method.
+                               - Adding role rewards with the following methods: createRoleReward(), deleteRoleReward(), fetchRoleReward()
+
 - **27 May 2021** (v1.1.11) - Adding deleteGuild() method.
 
 - **3 April 2021** (v1.1.11) - Adding TS typings.
@@ -51,6 +54,48 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 *Examples can be found in /test*
 
 # Methods
+
+**createRoleReward**
+
+Creates a role reward entry in database for the guild if it doesnt exist.
+```js
+Levels.createRoleReward(<GuildID - String>, <level - Number>, <roleId - String>);
+```
+- Output:
+```
+Promise<Object>
+```
+**deleteRoleReward**
+
+Deletes a role reward entry in database for the guild.
+```js
+Levels.deleteRoleReward(<GuildID - String>, <level - Number>);
+```
+- Output:
+```
+Promise<Object>
+```
+**fetchRoleReward**
+
+Fetches a role reward entry in database for the guild.
+```js
+Levels.fetchRoleReward(<GuildID - String>, <level - Number>);
+```
+- Output:
+```
+Promise<Object>
+```
+**cleanDataBase**
+
+Cleans the database from unknown users for a guild.
+```js
+Levels.CleanDatabase(<Client - Discord.js Client>, <GuildID - String>);
+```
+- Output:
+```
+Promise<Object>
+```
+----------------------------
 **createUser**
 
 Creates an entry in database for that user if it doesnt exist.
