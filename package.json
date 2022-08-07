@@ -6,7 +6,6 @@
   "dependencies": {
     "mongoose": "^5.11.11"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MrAugu/discord-xp.git"
@@ -34,5 +33,12 @@
   "bugs": {
     "url": "https://github.com/MrAugu/discord-xp/issues"
   },
-  "homepage": "https://github.com/MrAugu/discord-xp#readme"
+  "homepage": "https://github.com/MrAugu/discord-xp#readme",
+  "devDependencies": {
+    "eslint": "^8.21.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0"
+  }
 }
