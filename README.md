@@ -17,9 +17,12 @@ npm update discord-xp
 ```
 
 # Changelog
+- **25 August 2022** (v1.1.18): `WARNING: This version contains breaking changes in the way the package parses number input!`
+  * The following methods now throw a TypeError if an invalid amount of xp was provided (xp is 0 or lower): `appendXp(), substractXp(), setXp()`
+
 - **07 August 2022** (v1.1.17):
   * Adding cleanDatabase() method.
-  * Adding role rewards with the following methods: createRoleReward(), deleteRoleReward(), fetchRoleReward()
+  * Adding role rewards with the following methods: `createRoleReward(), deleteRoleReward(), fetchRoleReward()`
 
 - **27 May 2021** (v1.1.11):
   * Adding deleteGuild() method.
