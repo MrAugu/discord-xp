@@ -27,7 +27,7 @@ type LeaderboardUser = {
 
 declare module "discord-xp" {
   export default class DiscordXp {
-    static async setURL(dbURL: string): Promise<typeof import("mongoose")>;
+    static async setURL(dbURL: string): Promise<void>;
     static async createUser(userId: string, guildId: string): Promise<User>;
     static async deleteUser(userId: string, guildId: string): Promise<User>;
     static async deleteGuild(guildId: string): Promise<Guild>;
