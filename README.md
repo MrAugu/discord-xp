@@ -17,17 +17,30 @@ npm update discord-xp
 ```
 
 # Changelog
-- **27 May 2021** (v1.1.11) - Adding deleteGuild() method.
+- **25 August 2022** (v1.1.18): `WARNING: This version contains breaking changes in the way the package parses number input!`
+  * The following methods now throw a TypeError if an invalid amount of xp was provided (xp is 0 or lower): `appendXp(), substractXp(), setXp()`
 
-- **3 April 2021** (v1.1.11) - Adding TS typings.
+- **07 August 2022** (v1.1.17):
+  * Adding cleanDatabase() method.
+  * Adding role rewards with the following methods: `createRoleReward(), deleteRoleReward(), fetchRoleReward()`
 
-- **25 February 2021** (v1.1.8) - Preventing further deprection warnings to be displayed, if you encounter any of these deprecation issues, update the module.
+- **27 May 2021** (v1.1.11):
+  * Adding deleteGuild() method.
 
-- **22 November 2020** (v1.1.7) `WARNING: This semi-major version contains breaking changes in the way leaderboard computing function works.`
-1. Added an optional `fetchPosition` argument to the `Levels.fetch` which will add the leaderboard rank as the `position` property. Caution: Will be slower on larger servers.
-2. `Levels.computeLeaderboard` is now asynchronous and can take in a third parameter called `fetchUsers` which will fetch all users on the leaderboard. This parameter **does not** require additional Gateway Intents. Caution: Will be substantially slower if you do not have `Guild_Members` intent and catch some users beforehand. 
+- **3 April 2021** (v1.1.10):
+  * Adding TS typings.
 
-- **16 July 2020** - Added `xpFor` method to calculate xp required for a specific level.
+- **25 February 2021** (v1.1.8):
+  * Preventing further deprection warnings to be displayed, if you encounter any of these deprecation issues, update the module.
+
+- **22 November 2020** (v1.1.7):
+
+`WARNING: This semi-major version contains breaking changes in the way leaderboard computing function works.`
+  * Added an optional `fetchPosition` argument to the `Levels.fetch` which will add the leaderboard rank as the `position` property. Caution: Will be slower on larger servers.
+  * `Levels.computeLeaderboard` is now asynchronous and can take in a third parameter called `fetchUsers` which will fetch all users on the leaderboard. This parameter **does not** require additional Gateway Intents. Caution: Will be substantially slower if you do not have `Guild_Members` intent and catch some users beforehand. 
+
+- **16 July 2020**:
+  * Added `xpFor` method to calculate xp required for a specific level.
 ```js
 /* xpFor Example */
 const Levels = require("discord-xp");
@@ -51,6 +64,48 @@ Levels.setURL("mongodb://..."); // You only need to do this ONCE per process.
 *Examples can be found in /test*
 
 # Methods
+
+**createRoleReward**
+
+Creates a role reward entry in database for the guild if it doesnt exist.
+```js
+Levels.createRoleReward(<GuildID - String>, <level - Number>, <roleId - String>);
+```
+- Output:
+```
+Promise<Object>
+```
+**deleteRoleReward**
+
+Deletes a role reward entry in database for the guild.
+```js
+Levels.deleteRoleReward(<GuildID - String>, <level - Number>);
+```
+- Output:
+```
+Promise<Object>
+```
+**fetchRoleReward**
+
+Fetches a role reward entry in database for the guild.
+```js
+Levels.fetchRoleReward(<GuildID - String>, <level - Number>);
+```
+- Output:
+```
+Promise<Object>
+```
+**cleanDataBase**
+
+Cleans the database from unknown users for a guild.
+```js
+Levels.CleanDatabase(<Client - Discord.js Client>, <GuildID - String>);
+```
+- Output:
+```
+Promise<Object>
+```
+----------------------------
 **createUser**
 
 Creates an entry in database for that user if it doesnt exist.
